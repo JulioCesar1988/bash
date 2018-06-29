@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# definimos los usuarios 
+usuarios=( $(cat /etc/passwd | cut -d: -f1 ))
+
+# Eliminar un usuario : <parametro>
+function eliminar {
+pos=-1
+for((i=0 ;i < ${#usuarios[@]} ;i++))
+do
+ echo ${usuarios[$i]}
+ if [ ${usuarios[$i]} == $1 ];then 
+     echo "Encontre a $1 en el arreglo de usuarios"
+     pos=$i
+  fi
+done 
+echo "posicion $pos"
+unset usuarios[$pos]
+}
+
+# Buscar usuario_patron : <parametro> 
+function usuario_patron {
+for((i=0;i < ${#usuarios[@]};i++  ))
+do 
+if [ $(echo ${usuarios[$i]} | grep $1 | wc -l ) -eq 1 ];then 
+   echo "existencia de patron en ${usuarios[$i]} contiene a $1 "
+fi
+
+done
+}
+
+
+# Imprimir todos los usuarios 
+function mostrar_usuarios {
+echo ${usuarios[@]}
+}
+
+# Existe un usuario en particular 
+function existe {
+pos=-1
+for((i=0; i< ${#usuarios[@]} ; i++ ))
+do
+  if [ ${usuarios[$i]} == $1   ];then 
+    echo "Usuario encontrado $1"
+    pos=$i
+  fi
+done
+echo "Ubicacion $pos"
+}
+
+# Tamanio del arreglo 
+function tamanio {
+echo "Tamanio ${#usuarios[@]}"
+}
+
+
+#existe ubuntu
+#eliminar julio
+#mostrar_usuarios
+tamanio 
+usuario_patron ubun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
